@@ -8,6 +8,12 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
+            "program": "${workspaceFolder}/Atom/integer.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch File",
             "program": "${file}"
         }
     ]

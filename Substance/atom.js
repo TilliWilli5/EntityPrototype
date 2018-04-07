@@ -34,6 +34,10 @@ class Atom extends Substance
 
 
 
+    valueOf(){
+        return this.value;
+    }
+
     Clone(){
         return new this.constructor(this.LoadAtomValue());
     }

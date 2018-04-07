@@ -2,7 +2,7 @@ const Atom = require("../Substance/atom.js");
 
 const value = Symbol("ValueStorage");
 
-class FiniteNumberAtom extends Atom
+class FloatAtom extends Atom
 {
     IsAcceptableJsValue(jsValue){
         if(typeof(jsValue)==="number" && Number.isNaN(jsValue) === false)
@@ -24,4 +24,4 @@ class FiniteNumberAtom extends Atom
     }
 }
 
-module.exports = FiniteNumberAtom;
+module.exports = FloatAtom;

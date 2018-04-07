@@ -1,18 +1,18 @@
-const FiniteNumberAtom = require("./finiteNumber.js");
+const FloatAtom = require("./float.js");
 
 const value = Symbol("ValueStorage");
 
-class IntegerAtom extends FiniteNumberAtom
+class IntegerAtom extends FloatAtom
 {
     IsAcceptableJsValue(jsValue){
         return super.IsAcceptableJsValue(jsValue);
     }
 
     ConvertToAtomValue(jsValue){
-        var finiteNumber = super.ConvertToAtomValue(jsValue);
-        var safeInteger = finiteNumber > 0
-            ? finiteNumber > Number.MAX_SAFE_INTEGER ? Number.MAX_SAFE_INTEGER : finiteNumber
-            : finiteNumber < -Number.MAX_SAFE_INTEGER ? -Number.MAX_SAFE_INTEGER : finiteNumber;
+        var floatNumber = super.ConvertToAtomValue(jsValue);
+        var safeInteger = floatNumber > 0
+            ? floatNumber > Number.MAX_SAFE_INTEGER ? Number.MAX_SAFE_INTEGER : floatNumber
+            : floatNumber < -Number.MAX_SAFE_INTEGER ? -Number.MAX_SAFE_INTEGER : floatNumber;
         var integer = Math.floor(safeInteger);
         return integer;
     }
@@ -27,6 +27,5 @@ class IntegerAtom extends FiniteNumberAtom
 }
 
 module.exports = IntegerAtom;
-
-var integer1 = new IntegerAtom(-99999999999999999999999999999999999999.01);
-console.log(integer1.value, integer1.value===Number.MAX_SAFE_INTEGER);
+// var x = +new IntegerAtom(12) +new IntegerAtom(99.05) +new IntegerAtom(Infinity);
+// console.log(`IntegerAtom(12): `, +new IntegerAtom(x));
