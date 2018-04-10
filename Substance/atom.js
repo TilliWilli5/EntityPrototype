@@ -1,6 +1,8 @@
 const Substance = require("./substance.js");
 const JsObject = require("../JsObject/index.js");
 
+const value = Symbol("ValueStorage");
+
 class Atom extends Substance
 {
     /**
@@ -46,27 +48,27 @@ class Atom extends Substance
         return this.LoadAtomValue();
     }
 
-    //Not implemented below
-
-    IsAcceptableJsValue(value){ 
-        throw new Error("Not implemented: IsAcceptableJsValue");
-    }
-    
-    ValidateJsValue(value){
-        if(!this.IsAcceptableJsValue(value))
-            throw new Error(`Invalid value: ${value}`);
-    }
-
-    ConvertToAtomValue(value){
-        throw new Error("Not implemented: ConvertToAtomValue");
-    }
-
-    StoreAtomValue(value){
-        throw new Error("Not implemented: StoreAtomValue");
+    StoreAtomValue(atomValue){
+        this[value] = atomValue;
     }
 
     LoadAtomValue(){
-        throw new Error("Not implemented: LoadAtomValue");
+        return this[value];
+    }
+
+    //Not implemented below
+
+    IsAcceptableJsValue(jsValue){ 
+        throw new Error("Not implemented: IsAcceptableJsValue");
+    }
+    
+    ValidateJsValue(jsValue){
+        if(!this.IsAcceptableJsValue(jsValue))
+            throw new Error(`Invalid value: ${jsValue}`);
+    }
+
+    ConvertToAtomValue(jsValue){
+        throw new Error("Not implemented: ConvertToAtomValue");
     }
 }
 
