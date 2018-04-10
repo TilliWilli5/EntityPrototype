@@ -11,11 +11,14 @@ class Atom extends Substance
      */
     constructor(jsValue){
         super();
+        this.ValidateDefaultJsValue();
+        jsValue = jsValue || this.constructor.DefaultJsValue;
         this.ValidateJsValue(jsValue);
         //TODO: подумать как реализовать клонирование и нужно оно тут вообще?!
         // var clonedJsValue = JsObject.CloneJsObject(jsValue);
         var atomValue = this.ConvertToAtomValue(jsValue);
         this.StoreAtomValue(atomValue);
+        Object.hasOwnProperty()
     }
 
 
@@ -36,9 +39,18 @@ class Atom extends Substance
 
 
 
-    valueOf(){
-        return this.value;
+    static get DefaultJsValue(){
+        throw new Error(`Every Atom must provide DefaultJsValue`);
     }
+
+    ValidateDefaultJsValue(){
+        if( this.constructor.hasOwnProperty("DefaultJsValue") === false)
+            throw new Error(`The specified class: ${this.constructor.name} doesn't provide property DefaultJsValue`);
+    }
+
+    // valueOf(){
+    //     return this.value;
+    // }
 
     Clone(){
         return new this.constructor(this.LoadAtomValue());

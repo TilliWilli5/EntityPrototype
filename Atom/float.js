@@ -12,6 +12,10 @@ class FloatAtom extends Atom
             ? jsValue
             : jsValue > 0 ? Number.MAX_VALUE : -Number.MAX_VALUE;
     }
+
+    static get DefaultJsValue(){
+        return 0;
+    }
 }
 
 module.exports = FloatAtom;
