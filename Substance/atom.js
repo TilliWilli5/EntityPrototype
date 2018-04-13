@@ -12,7 +12,9 @@ class Atom extends Substance
     constructor(jsValue){
         super();
         this.ValidateDefaultJsValue();
-        jsValue = jsValue || this.constructor.DefaultJsValue;
+        jsValue = (jsValue === undefined || jsValue === null)
+            ? this.constructor.DefaultJsValue
+            : jsValue;
         this.ValidateJsValue(jsValue);
         //TODO: подумать как реализовать клонирование и нужно оно тут вообще?!
         // var clonedJsValue = JsObject.CloneJsObject(jsValue);
