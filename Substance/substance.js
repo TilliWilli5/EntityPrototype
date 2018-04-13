@@ -10,7 +10,7 @@ class Substance
         return this;
     }
     Serialize(){
-        JSON.stringify(this.Preserialize());
+        return JSON.stringify(this.Preserialize());
     }
     static Deserialize(serialized){
         return JSON.parse(serialized);

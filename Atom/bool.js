@@ -15,6 +15,14 @@ class BoolAtom extends Atom
     static get DefaultJsValue(){
         return false;
     }
+
+    static get True(){
+        return new BoolAtom(true);
+    }
+
+    static get False(){
+        return new BoolAtom(false);
+    }
 }
 
 module.exports = BoolAtom;
