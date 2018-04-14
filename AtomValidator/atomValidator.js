@@ -20,6 +20,10 @@ function ValidateFunction(atomConstructor, validatorFunction){
 class AtomValidator
 {
     constructor(atomConstructor, validatorFunction){
+        //TODO: подумать как можно реализовать sealed класс по-другому и насколько это нужно
+        if(this.constructor !== AtomValidator)
+            throw new Error("Наследование от класса -AtomValidator- запрещено");
+
         ValidateFunction(atomConstructor, validatorFunction);
 
         this[type] = atomConstructor;
@@ -34,14 +38,18 @@ class AtomValidator
         this.name = validatorFunction.name;
     }
 
-    Valid(atom){
+    //TODO: нужна лучшая реализацией
+    Valid(atom, context){
+        if(atom && atom.IsAtom && atom.IsAtom(atom))//TODO: нужна лучшая реализацией
+            if(!(atom instanceof this[type])) throw new InvalidAtomTypeError();
+            else return this[validator](atom, context);
+        else
+            throw new NotAtomError();
         // if(!(atom instanceof this[type])) return BoolAtom.False;
-        if(!(atom instanceof this[type])) throw new NotAtomError(atom);
-        else return this[validator](atom);
     }
 
-    Invalid(atom){
-        return !this.Valid(atom);
+    Invalid(atom, context){
+        return !this.Valid(atom, context);
     }
 
     get true(){
@@ -51,25 +59,32 @@ class AtomValidator
     get false(){
         return BoolAtom.False;
     }
+
+    // FormValidationContext(context){
+    //     return Object.assign(context, {
+    //         true: BoolAtom.True,
+    //         false: BoolAtom.False,
+    //     });
+    // }
     
 }
 
 module.exports = AtomValidator;
 
-// var Vfunc = function isTrue(boolAtom){
-//     return boolAtom.value === true
-//         ? this.true
-//         : this.false;
-// }
-// var isTrueAtom = new AtomValidator(BoolAtom, Vfunc);
+var Vfunc = function isTrue(boolAtom){
+    return boolAtom.value === true
+        ? this.true
+        : this.false;
+}
+var isTrueAtom = new AtomValidator(BoolAtom, Vfunc);
 // var v2 = new AtomValidator(BoolAtom, ()=>{});
-// var result = isTrueAtom.Valid(new BoolAtom(false));
-// console.log(result, result.value, result.Serialize());
+var result = isTrueAtom.Valid(new BoolAtom(false));
+console.log(result, result.value, result.Serialize());
 
 // var result = v1.IsValid(false);
 // var result = v1.Validate(true);
 // var result = v1.Validate(null);
 
-// console.log("IsValid: ", isTrueAtom.Valid(BoolAtom.True).value);
+console.log("IsValid: ", isTrueAtom.Valid(BoolAtom.True).value);
 
 // var v2 = new AtomValidator(BoolAtom, "do it");

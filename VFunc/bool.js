@@ -18,8 +18,9 @@ module.exports = AtomValidatorFactory(BoolAtom, validators);
 
 const Console = require("../console.js");
 
+//TODO: очень плохая реализация + вынести в отдельный файл
 function ToString(atomOrValue){
-    return atomOrValue instanceof BoolAtom
+    return atomOrValue && typeof(atomOrValue.Super)==="function" && atomOrValue instanceof atomOrValue.Super()
         ? `${atomOrValue.constructor.name}<${atomOrValue.value}>`
         : "" + atomOrValue;
 }

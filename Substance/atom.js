@@ -70,6 +70,14 @@ class Atom extends Substance
         return this[value];
     }
 
+    IsAtom(atom){//TODO: необходимо придумать надежный алгоритм определения (Атом или НеАтом)
+        return atom instanceof Atom;
+    }
+
+    Super(){//TODO: необходимо придумать надежный алгоритм определения (Атом или НеАтом)
+        return Atom;
+    }
+
     //Not implemented below
 
     IsAcceptableJsValue(jsValue){ 
