@@ -1,4 +1,5 @@
 const Atom = require("../Substance/atom.js");
+const WithMathan = require("../Mathan/float.mathan.js");
 
 class FloatAtom extends Atom
 {
@@ -18,4 +19,20 @@ class FloatAtom extends Atom
     }
 }
 
+//TODO: refactoring
+var math = WithMathan(FloatAtom);
+for(let func in math)
+{
+    FloatAtom.prototype[func] = function(...args){return math[func](this, ...args.slice())};
+}
+
 module.exports = FloatAtom;
+//  = Object.assign(
+//     FloatAtom.prototype,
+//     WithMathan(FloatAtom).map(f => function(...args){return f(this, ...args.slice())} ),
+// );
+
+
+var f1 = new FloatAtom(12.3);
+var f2 = f1.add(12);
+console.log(f2.value);

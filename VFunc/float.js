@@ -1,7 +1,5 @@
 const AtomValidatorFactory = require("../AtomValidator/atomValidatorFactory.js");
 const FloatAtom = require("../Atom/float.js");
-const BoolAtom = require("../Atom/bool.js");
-// const mathan = require("../Mathan/mathan.js");
 
 const validators = [
     /** @param {LimitCue} ctx */
@@ -19,9 +17,7 @@ const validators = [
     //     else return floatAtom.value <= ctx.value ? true : false;
 
     // },
-    function Discrete(floatAtom, ctx = {value:0}){
-        // return floatAtom.value % ctx.value === 0;
-        // return floatAtom.mod(new FloatAtom(ctx.value)).value === 0;
+    function Discrete(floatAtom, ctx = {value:Infinity}){
         return floatAtom.mod(ctx.value).value === 0;
     },
 ];
@@ -38,7 +34,7 @@ const Console = require("../console.js");
 
 //TODO: очень плохая реализация + вынести в отдельный файл
 function ToString(atomOrValue){
-    return atomOrValue && typeof(atomOrValue.Super)==="function" && atomOrValue instanceof atomOrValue.Super()
+    return atomOrValue && typeof(atomOrValue.Origin)==="function" && atomOrValue instanceof atomOrValue.Origin
         ? `${atomOrValue.constructor.name}<${atomOrValue.value}>`
         : "" + atomOrValue;
 }
@@ -52,12 +48,12 @@ var tableReport = []
     return [validator.name, reportValue, reportPass, reportMessage, ToString(reportResult), JSON.stringify(ctx)];
 })
 .concat(() => {
-    var tryValue = new BoolAtom(), validator = module.exports.MinLimit, reportPass="", reportMessage="", reportResult="";var reportValue = ToString(tryValue);var ctx={exclude:false,value:12};
+    var tryValue = undefined, validator = module.exports.MinLimit, reportPass="", reportMessage="", reportResult="";var reportValue = ToString(tryValue);var ctx={exclude:false,value:12};
     try{reportResult = validator.Valid(tryValue,ctx);reportPass="[PASSED]";}catch(e){reportPass="[FAILED]";reportMessage=e.message;}
     return [validator.name, reportValue, reportPass, reportMessage, ToString(reportResult), JSON.stringify(ctx)];
 })
 .concat(() => {
-    var tryValue = new BoolAtom(true), validator = module.exports.MinLimit, reportPass="", reportMessage="", reportResult="";var reportValue = ToString(tryValue);var ctx={exclude:false,value:12};
+    var tryValue = true, validator = module.exports.MinLimit, reportPass="", reportMessage="", reportResult="";var reportValue = ToString(tryValue);var ctx={exclude:false,value:12};
     try{reportResult = validator.Valid(tryValue,ctx);reportPass="[PASSED]";}catch(e){reportPass="[FAILED]";reportMessage=e.message;}
     return [validator.name, reportValue, reportPass, reportMessage, ToString(reportResult), JSON.stringify(ctx)];
 })
@@ -69,7 +65,7 @@ var tableReport = []
 
 //Max Limit
 .concat(() => {
-    var tryValue = new BoolAtom(true), validator = module.exports.MaxLimit, reportPass="", reportMessage="", reportResult="";var reportValue = ToString(tryValue);var ctx={exclude:false,value:12};
+    var tryValue = true, validator = module.exports.MaxLimit, reportPass="", reportMessage="", reportResult="";var reportValue = ToString(tryValue);var ctx={exclude:false,value:12};
     try{reportResult = validator.Valid(tryValue,ctx);reportPass="[PASSED]";}catch(e){reportPass="[FAILED]";reportMessage=e.message;}
     return [validator.name, reportValue, reportPass, reportMessage, ToString(reportResult), JSON.stringify(ctx)];
 })

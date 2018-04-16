@@ -1,5 +1,6 @@
 const Substance = require("./substance.js");
 const JsObject = require("../JsObject/index.js");
+const ExternalAtomify = require("./atomify.js");
 
 const value = Symbol("ValueStorage");
 
@@ -77,12 +78,25 @@ class Atom extends Substance
         return atom instanceof Atom;
     }
 
-    Super(){//TODO: необходимо придумать надежный алгоритм определения (Атом или НеАтом)
+    get Type(){
+        return this.constructor;
+    }
+
+    get Origin(){//TODO: необходимо придумать надежный алгоритм определения (Атом или НеАтом)
         return Atom;
     }
 
-    get Type(){
-        return this.constructor;
+    static get Origin(){//TODO: необходимо придумать надежный алгоритм определения (Атом или НеАтом)
+        return Atom;
+    }
+
+    static get Atomify(){
+        const Factory = this;
+        return function(jsValueOrAtom){
+            return jsValueOrAtom instanceof Atom
+                ? new Factory(jsValueOrAtom.value)
+                : new Factory(jsValueOrAtom);
+        }
     }
 
     //Not implemented below

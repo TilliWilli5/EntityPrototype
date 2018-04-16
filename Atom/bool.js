@@ -1,4 +1,5 @@
 const Atom = require("../Substance/atom.js");
+const WithMathan = require("../Mathan/bool.mathan.js");
 
 class BoolAtom extends Atom
 {
@@ -25,7 +26,17 @@ class BoolAtom extends Atom
     }
 }
 
-module.exports = BoolAtom;
+//TODO: refactoring
+var math = WithMathan(BoolAtom);
+for(var func in math)
+{
+    BoolAtom.prototype[func] = function(...args){return math[func](this, ...args.slice())};
+}
+
+module.exports = BoolAtom;//Object.assign(
+    // BoolAtom,
+    // ...WithMathan(BoolAtom).map(f => function(...args){return f(this, ...args.slice())} ),
+// );
 
 // var b1 = new BoolAtom();
 // var res = (b1.value);
