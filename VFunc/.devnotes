@@ -1,0 +1,5 @@
+-1-
+Атом Валидаторы имеют следубщую сигнатуру
+VFunc(Atom,JsValue) => JsValue<Boolean>
+
+-2-

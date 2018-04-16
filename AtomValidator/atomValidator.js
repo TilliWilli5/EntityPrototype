@@ -12,8 +12,8 @@ function ValidateFunction(atomConstructor, validatorFunction){
     if(!(atomConstructor.prototype instanceof Atom))
         throw new InvalidAtomTypeError(`Invalid AtomType: ${atomConstructor.name}`);
 
-    const fakeCtx = {true: BoolAtom.True, false: BoolAtom.False};
-    if(!(validatorFunction.bind(fakeCtx)(new atomConstructor()) instanceof BoolAtom))
+    // const fakeCtx = {true: BoolAtom.True, false: BoolAtom.False};
+    if(typeof( validatorFunction(new atomConstructor()) ) !== "boolean" )
         throw new InvalidAtomValidatorError(`Provided Function is not fullfill requirement: f(AtomType)=>BoolAtom`);
 }
 
@@ -34,7 +34,7 @@ class AtomValidator
         //         throw new AtomValidationFailedError();
         //     return BindedValidator(atom);
         // };
-        this[validator] = validatorFunction.bind(this);
+        this[validator] = validatorFunction;//.bind(this);
         this.name = validatorFunction.name;
     }
 
@@ -42,7 +42,7 @@ class AtomValidator
     Valid(atom, context){
         if(atom && atom.IsAtom && atom.IsAtom(atom))//TODO: нужна лучшая реализацией
             if(!(atom instanceof this[type])) throw new InvalidAtomTypeError();
-            else return this[validator](atom, context);
+            else return new BoolAtom(this[validator](atom, context));
         else
             throw new NotAtomError();
         // if(!(atom instanceof this[type])) return BoolAtom.False;
@@ -52,13 +52,13 @@ class AtomValidator
         return !this.Valid(atom, context);
     }
 
-    get true(){
-        return BoolAtom.True;
-    }
+    // get true(){
+    //     return BoolAtom.True;
+    // }
 
-    get false(){
-        return BoolAtom.False;
-    }
+    // get false(){
+    //     return BoolAtom.False;
+    // }
 
     // FormValidationContext(context){
     //     return Object.assign(context, {
@@ -73,8 +73,8 @@ module.exports = AtomValidator;
 
 var Vfunc = function isTrue(boolAtom){
     return boolAtom.value === true
-        ? this.true
-        : this.false;
+        ? true
+        : false;
 }
 var isTrueAtom = new AtomValidator(BoolAtom, Vfunc);
 // var v2 = new AtomValidator(BoolAtom, ()=>{});

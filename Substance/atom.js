@@ -20,7 +20,6 @@ class Atom extends Substance
         // var clonedJsValue = JsObject.CloneJsObject(jsValue);
         var atomValue = this.ConvertToAtomValue(jsValue);
         this.StoreAtomValue(atomValue);
-        Object.hasOwnProperty()
     }
 
 
@@ -54,6 +53,10 @@ class Atom extends Substance
     //     return this.value;
     // }
 
+    static New(jsValue){
+        return 
+    }
+
     Clone(){
         return new this.constructor(this.LoadAtomValue());
     }
@@ -76,6 +79,10 @@ class Atom extends Substance
 
     Super(){//TODO: необходимо придумать надежный алгоритм определения (Атом или НеАтом)
         return Atom;
+    }
+
+    get Type(){
+        return this.constructor;
     }
 
     //Not implemented below
