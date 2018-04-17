@@ -31,9 +31,7 @@ function ContextBinder(AtomType){
         return $($(a1).value === $(a2).value);
     }
 
-    return {
-        add, mul, div, eq
-    };
+    return { add, mul, div, eq };
 }
 
 module.exports = ContextBinder;

@@ -23,7 +23,10 @@ class FloatAtom extends Atom
 var math = WithMathan(FloatAtom);
 for(let func in math)
 {
-    FloatAtom.prototype[func] = function(...args){return math[func](this, ...args.slice())};
+    FloatAtom.prototype[func] = function(...args){
+        var atomifiedArgs = args.map(a => FloatAtom.Atomify(a));//TODO: HACK: плохо реализовано
+        return math[func](this, ...atomifiedArgs.slice(-1))
+    };
 }
 
 module.exports = FloatAtom;

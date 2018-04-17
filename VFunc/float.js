@@ -1,4 +1,4 @@
-const AtomValidatorFactory = require("../AtomValidator/atomValidatorFactory.js");
+const ValidatorController = require("../AtomValidator/atomValidatorFactory.js");
 const FloatAtom = require("../Atom/float.js");
 
 const validators = [
@@ -22,7 +22,7 @@ const validators = [
     },
 ];
 
-module.exports = AtomValidatorFactory(FloatAtom, validators);
+module.exports = ValidatorController(FloatAtom, validators);
 
 /**
  * @typedef LimitCue

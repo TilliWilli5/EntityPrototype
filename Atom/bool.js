@@ -30,7 +30,10 @@ class BoolAtom extends Atom
 var math = WithMathan(BoolAtom);
 for(var func in math)
 {
-    BoolAtom.prototype[func] = function(...args){return math[func](this, ...args.slice())};
+    BoolAtom.prototype[func] = function(...args){
+        var atomifiedArgs = args.map(a => BoolAtom.Atomify(a));//TODO: HACK: плохо реализовано
+        return math[func](this, ...atomifiedArgs.slice(-1))
+    };
 }
 
 module.exports = BoolAtom;//Object.assign(

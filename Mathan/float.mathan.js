@@ -21,7 +21,7 @@ function ContextBinder(AtomType){
         return $(r);
     }
 
-    return Object.assign(AtomMathan(AtomType), {mod});
+    return Object.assign(AtomMathan(AtomType), { mod });
 }
 
 module.exports = ContextBinder;
