@@ -1,0 +1,27 @@
+var Bool;
+var Integer;
+var Guid;
+var Url;
+var EntityGuid;
+
+var ExhibitScheme  = {
+    guid: Guid(),
+    serial: Integer({min: 0, max:16, step:1}),
+    coverImage: Url({except:Url.scheme.File | Url.scheme.Base64}),
+    imageGallery: EntityGuid(),//Special guid format that can be resolved by EntityResolver
+};
+
+
+
+<ExhibitScheme>
+    guid : Guid
+    serial : Integer[
+        min = 0
+        max = 16
+        step = 1
+    ]
+    coverImage : Url[
+        except = Url.scheme.File | Url.scheme.Base64
+    ]
+    imageGallery : EntityGuid
+    startIndex = 0
