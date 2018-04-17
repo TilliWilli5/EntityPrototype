@@ -21,6 +21,7 @@ class Atom extends Substance
         // var clonedJsValue = JsObject.CloneJsObject(jsValue);
         var atomValue = this.ConvertToAtomValue(jsValue);
         this.StoreAtomValue(atomValue);
+        Object.freeze(this);
     }
 
 

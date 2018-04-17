@@ -12,3 +12,19 @@
 Атомы должны иметь конструктор без параметров
 
 -6-
+atom emitter будет использовать proxy-fluent initialization.
+atom emitter будет выглядеть следующим образом:
+
+точка входа в библиотеку
+    $
+
+тип нового атома
+    $.enum
+    $.int
+
+Финализаторы
+    $.enum.Red.Green.Blue()
+    $.enum.int(12);
+    $.List.guid(["h423n4c923", "d83u2d2md32"])
+    $.List.bool([true, false, true])
+    $.List.int([1,2,3,4,5])
