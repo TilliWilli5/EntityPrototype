@@ -1,6 +1,5 @@
 const Substance = require("./substance.js");
 const JsObject = require("../JsObject/index.js");
-const ExternalAtomify = require("./atomify.js");
 
 const value = Symbol("ValueStorage");
 

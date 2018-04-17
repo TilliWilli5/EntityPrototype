@@ -3,14 +3,10 @@ const BoolAtom = require("../Atom/bool.js");
 
 const validators = [
     function IsTrue(boolAtom){
-        return boolAtom.value === true
-            ? this.true
-            : this.false;
+        return boolAtom.value === true;
     },
     function IsFalse(boolAtom){
-        return boolAtom.value === false
-            ? this.true
-            : this.false;
+        return boolAtom.value === false;
     }
 ];
 
@@ -20,7 +16,7 @@ const Console = require("../console.js");
 
 //TODO: очень плохая реализация + вынести в отдельный файл
 function ToString(atomOrValue){
-    return atomOrValue && typeof(atomOrValue.Super)==="function" && atomOrValue instanceof atomOrValue.Super()
+    return atomOrValue && typeof(atomOrValue.Origin)==="function" && atomOrValue instanceof atomOrValue.Origin
         ? `${atomOrValue.constructor.name}<${atomOrValue.value}>`
         : "" + atomOrValue;
 }
