@@ -13,3 +13,11 @@ Atom = value
 substance не коем образом не должен принимать параметров в конструкторе и не должен ничего знать о jsValue
 
 -6-
+Перенести ValidateDefaultJsValue в статические методы класса
+ValidateDefaultJsValue => static ValidateDefaultJsValue
+
+-7-
+Добавить метод ForceConvert for Atom. Смысл в том что:
+jsValue приходящее из UserSpace формы будет вначале проверяться на валидность с помощью IsAcceptableJsValue а потом конвериться с помощью метода ForceConvert
+
+-8-
