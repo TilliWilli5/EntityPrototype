@@ -2,6 +2,9 @@ const Atom = require("../Substance/atom.js");
 
 class EnumAtom extends Atom
 {
+    /**
+     * @param {EnumProto} jsValue 
+     */
     IsAcceptableJsValue(jsValue){
         if(
             jsValue.constructor === Object
@@ -16,67 +19,42 @@ class EnumAtom extends Atom
     ConvertToAtomValue(jsValue){
         return Object.freeze(jsValue);
     }
+
+    static get DefaultJsValue(){
+        return {};
+    }
+
+    get is(){
+        var self = this;
+        return new Proxy({}, {
+            get: function(obj, prop){
+                return (value) => value === self.value[prop];
+            }
+        });
+    }
+
 }
 
 module.exports = EnumAtom;
 
-//use cases
+/**
+ * Объект вида {red:1, green:2, blue:3}
+ * @typedef {Array<{key,value}>} EnumProto
+ *
+ */
 
-// var Color = new Enum("red", "blue", "green");
-// ChangeColorTo(Color.Red);
-// if(theColor === Color.Red)
+var proto = "red green blue".split(" ")
+    .map(v => v.trim().toLowerCase())
+    .reduce((a,v,i)=>{a[v]=i;return a},{});
+var Color = new EnumAtom(proto);
 
-// var Color = new Enum("red green blue");
-// ChangeColorTo(Color.Red);
-// if(theColor === Color.Red)
+var theColor = Color.value.red;
 
+if(theColor === Color.value.red)
+    console.log("it is red");
 
-// var color = new Enum("red green blue");
-// ChangeColorTo(color.red);
-// if(theColor === color.red)
+if(Color.is.red(theColor))
+    console.log("it is red");
 
-// var eColor = new Enum("red green blue");
-// ChangeColorTo(eColor.red);
-// if(theColor === eColor.red)
-
-// var COLOR = new Enum("red green blue");
-// ChangeColorTo(COLOR.RED);
-// if(theColor === COLOR.RED)
-
-
-// var Color = new Enum({Red, Green, Blue});
-// ChangeColorTo(Color.Red);
-// if(theColor === COLOR.RED)
-
-// var Color = new Enum({Red:1, Green:2, Blue:3});
-// ChangeColorTo(Color.Red);
-// if(theColor === COLOR.RED)
-
-// var $ = Enum.Element;
-// var Color = new Enum($.Red, $.Green, $.Blue);
-// var Color = new Enum($.Red.Green.Blue);
-// var Color = $.Red.Green.Blue;
-// var Color = Enum.From.Red.Green.Blue;
-// var Color = Enum.From.Red.Green.Blue.Create();
-// var Color = e.Red.Green.Blue.Create();
-// var intAtom = a.Int.Create();
-// var intAtom = $.Int.New();
-// var intAtom = $.atom.Int.New();
-// var intAtom = $.atom.List.Guid.New();
-// var now = $.time.now;
-// var now = $.time.now();
-// var enumColors = $.enum.from.Red.Green.Create();
-// var enumColors = $.enum.Red.Green();
-// var Color = _.Red.Green.Blue;
-// // ChangeColorTo(Color.Red);
-// // if(theColor === COLOR.RED)
-
-// var theEnum = Object.freeze({
-//     Red:1,
-//     Green:2,
-//     Blue:3
-// });
-
-// var enumColors = $enum.Red.Green.Blue.$;
-
-/*$.bool(false);$bool(false)*/
+var thisColor = new EnumAtom();
+    console.log(thisColor);
